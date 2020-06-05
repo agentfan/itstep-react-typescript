@@ -6,10 +6,10 @@ interface ItemProps {
 
 const Item: React.FC<ItemProps> = (props) => {
     const {item} = props;
-    
+
     return (
         <div>
-            45454545
+            {`id:${item.id} text:${item.text} ${item.done ? "done" : "not done"}`}
         </div>
     );
 }

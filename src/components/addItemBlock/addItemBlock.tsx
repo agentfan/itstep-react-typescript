@@ -15,7 +15,13 @@ const AddItemBlock: React.FC<AddItemBlockProps> = (props) => {
     }
 
     const handleClick =  (e: MouseEvent<HTMLButtonElement>)=> {
-        
+        let maxID: number;
+        let i:number;
+        for(maxID = -1, i = 0; toDoList.length>i; i++) {
+            if(toDoList[i].id > maxID) maxID = toDoList[i].id;
+        }
+        let list = [...toDoList,{id: ++maxID, text: inputValue, done: false }];
+        setToDoList(list);
     }
 
     return (

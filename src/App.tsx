@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div>
       <ToDoList toDoList={toDoList}/>
-      <AddItemBlock toDoList={toDoList, setToDolist}/>
+      <AddItemBlock toDoList={toDoList} setToDoList={setToDolist}/>
     </div>
   );
 }
