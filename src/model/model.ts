@@ -87,13 +87,33 @@ class Model {
         this.onListChanged();
     }
 
-    public removeTask(id: number) {
-        let i = this.listOfTasks.list.findIndex( item => item.id === id);
+    public removeTask(taskId: number) {
+        let i = this.listOfTasks.list.findIndex( item => item.id === taskId);
         if(i !== -1) {
             const newList:Items = {list: this.listOfTasks.list };           
             newList.list.splice(i,1);
             this.listOfTasks = newList;
             this.onListChanged();
+        }
+    }
+
+    public changeTextOfTask(taskId: number, text:string) {
+        console.log("Changing text of task:",taskId,text);
+        let task = this.listOfTasks.list.find( t => t.id === taskId);
+        if(task) {
+            console.log("Text changed");
+            task.text = text;
+            this.onTaskChanged(taskId);
+        }
+    }
+
+    public changeDoneOfTask(taskId: number, done:boolean) {
+        console.log("Changing done of task:",taskId,done);
+        let task = this.listOfTasks.list.find( t => t.id === taskId);
+        if(task) {
+            console.log("Done changed");
+            task.done = done;
+            this.onTaskChanged(taskId);
         }
     }
 }

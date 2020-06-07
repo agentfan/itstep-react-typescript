@@ -18,7 +18,7 @@ const ToDoList: React.FC<ToDoListProps> = (props) => {
     useEffect(()=> {
         const subscription:number = model.subscribeToList(handleListChaned);
         return ()=> { model.detachFromList(subscription); }
-    });
+    },[props.model]);
 
     if(list.list.length === 0) return <div>No tasks</div>;
 
