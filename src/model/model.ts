@@ -1,51 +1,80 @@
-interface SubscribedOnTask {
+interface SubscribedToTask {
     id: number,
-    callBack: (id:number, item:ListItem) => void
+    taskId: number,
+    callback: (taskId:number, task:ListItem) => void
 }
 
-interface SubscribedOnList {
-    callBack: () => void
+interface SubscribedToList {
+    id: number,
+    callback: () => void
 }
 
 class Model {
     private id: number;
     private listOfTasks: ListItem[];
-    private subscribedOnTaskChanged: SubscribedOnTask[];
-    private subscribedOnListChanged: SubscribedOnList[];
+    private ArrayOfSubscribedToTask: SubscribedToTask[];
+    private idOfSubscribedToTask: number;
+    private ArrayOfSubscribedToList: SubscribedToList[];
+    private idOfSubscribedToList: number;
 
     private onListChanged() {
-
+        this.ArrayOfSubscribedToList.forEach(a => {a.callback();});
     }
 
-    private onTaskChanged(id: number) {
-        
+    private onTaskChanged(taskId: number) {
+        const task = this.listOfTasks.find(a => a.id === taskId);
+        if(!task) return;
+        this.ArrayOfSubscribedToTask.forEach(a => {if(a.taskId === taskId) a.callback(taskId, task)});
     }
 
     constructor(initList: ListItem[] = []) {
         this.id = -1;
         this.listOfTasks = [...initList];
         this.listOfTasks.forEach( item => { if(this.id<item.id) this.id = item.id });
-        this.subscribedOnTaskChanged = [];
-        this.subscribedOnListChanged = [];
+        this.ArrayOfSubscribedToTask = [];
+        this.idOfSubscribedToTask = -1;
+        this.ArrayOfSubscribedToList = [];
+        this.idOfSubscribedToList = -1;
     }
 
-    public subscribeOnTaskChanged(id: number, callBack: (id:number, item: ListItem) => void):void {
+    get list():ListItem[] { return this.listOfTasks; }
 
+    public subscribeToTask(taskId: number, callback: (id:number, item: ListItem) => void):number {
+        this.ArrayOfSubscribedToTask.push({id: ++this.idOfSubscribedToTask, taskId, callback});
+        console.log(`Subscribe to task ${taskId} ${callback} => ${this.idOfSubscribedToTask}:`);
+        console.log(this.ArrayOfSubscribedToTask);
+        return this.idOfSubscribedToTask;
     }
 
-    public unsubscribeOnTaskChanged(id: number, callBack: (id:number, item: ListItem) => void):void {
-
+    public detachFromTask(id:number):void {
+        let i = this.ArrayOfSubscribedToTask.findIndex(a => a.id === id);
+        if(i !== -1) {
+            this.ArrayOfSubscribedToTask.splice(i,1);
+            console.log(`Detach from task ${id}:`);
+        }
+        else console.log(`Detach from task ${id} failed!`);
+        console.log(this.ArrayOfSubscribedToTask);
     }
 
-    public subscribeOnListChanged(callBack: () => void):void {
-
+    public subscribeToList(callback: () => void):number {
+        this.ArrayOfSubscribedToList.push({id: ++this.idOfSubscribedToList, callback});
+        console.log(`Subscribe to list ${callback} => ${this.idOfSubscribedToList}:`);
+        console.log(this.ArrayOfSubscribedToList);
+        return this.idOfSubscribedToList;        
     }
 
-    public unsubscribeOnListChanged(callBack: () => void):void {
-
+    public detachFromList(id:number):void {
+        let i = this.ArrayOfSubscribedToList.findIndex(a => a.id === id);
+        if(i !== -1) {
+            this.ArrayOfSubscribedToList.splice(i,1);
+            console.log(`Detach from list ${id}:`);
+        }
+        else console.log(`Detach from list ${id} failed!`);
+        console.log(this.ArrayOfSubscribedToList);
     }
 
-    public addTask(text: string) {
+    public addTask(text: string | undefined) {
+        if(!text) return;
         this.listOfTasks.push(
             {
                 id: ++this.id,
