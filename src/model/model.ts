@@ -11,7 +11,7 @@ interface SubscribedToList {
 
 class Model {
     private id: number;
-    private listOfTasks: ListItem[];
+    private listOfTasks: Items;
     private ArrayOfSubscribedToTask: SubscribedToTask[];
     private idOfSubscribedToTask: number;
     private ArrayOfSubscribedToList: SubscribedToList[];
@@ -22,22 +22,22 @@ class Model {
     }
 
     private onTaskChanged(taskId: number) {
-        const task = this.listOfTasks.find(a => a.id === taskId);
+        const task = this.listOfTasks.list.find(a => a.id === taskId);
         if(!task) return;
         this.ArrayOfSubscribedToTask.forEach(a => {if(a.taskId === taskId) a.callback(taskId, task)});
     }
 
     constructor(initList: ListItem[] = []) {
         this.id = -1;
-        this.listOfTasks = [...initList];
-        this.listOfTasks.forEach( item => { if(this.id<item.id) this.id = item.id });
+        this.listOfTasks = {list: [...initList]};
+        this.listOfTasks.list.forEach( item => { if(this.id<item.id) this.id = item.id });
         this.ArrayOfSubscribedToTask = [];
         this.idOfSubscribedToTask = -1;
         this.ArrayOfSubscribedToList = [];
         this.idOfSubscribedToList = -1;
     }
 
-    get list():ListItem[] { return this.listOfTasks; }
+    get list():Items { return this.listOfTasks; }
 
     public subscribeToTask(taskId: number, callback: (id:number, item: ListItem) => void):number {
         this.ArrayOfSubscribedToTask.push({id: ++this.idOfSubscribedToTask, taskId, callback});
@@ -75,20 +75,24 @@ class Model {
 
     public addTask(text: string | undefined) {
         if(!text) return;
-        this.listOfTasks.push(
+        const newList:Items = {list: this.listOfTasks.list };
+        newList.list.push(
             {
                 id: ++this.id,
                 text: text,
                 done: false
             }
         );
+        this.listOfTasks = newList;
         this.onListChanged();
     }
 
     public removeTask(id: number) {
-        let i = this.listOfTasks.findIndex( item => item.id === id);
+        let i = this.listOfTasks.list.findIndex( item => item.id === id);
         if(i !== -1) {
-            this.listOfTasks.splice(i,1);
+            const newList:Items = {list: this.listOfTasks.list };           
+            newList.list.splice(i,1);
+            this.listOfTasks = newList;
             this.onListChanged();
         }
     }

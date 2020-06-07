@@ -8,10 +8,10 @@ interface ItemProps {
 
 const Item: React.FC<ItemProps> = (props) => {
     const {item, model} = props;
-    const [text, setText] = React.useState<ListItem>(item);
+    const [text, setText] = React.useState<string>(item.text);
 
     const handleTaskChaned = (id: number, newItem: ListItem)=> {
-        setText(newItem);
+        setText(newItem.text);
     }
 
     useEffect(()=> {
@@ -19,9 +19,14 @@ const Item: React.FC<ItemProps> = (props) => {
         return ()=> { model.detachFromTask(subscription); }
     });
 
+    const handleDelete = ()=> {
+        model.removeTask(item.id);
+    }
+
     return (
         <div>
-            {`id:${item.id} text:${item.text} ${item.done ? "done" : "not done"}`}
+            <span>{`id:${item.id} text:${text} ${item.done ? "done" : "not done"}`}</span>
+            <button onClick={handleDelete}> Del </button>
         </div>
     );
 }

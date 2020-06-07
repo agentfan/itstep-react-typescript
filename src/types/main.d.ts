@@ -3,3 +3,7 @@ declare interface ListItem {
     text: string,
     done: boolean
 }
+
+declare interface Items {
+    list: ListItem[]
+}

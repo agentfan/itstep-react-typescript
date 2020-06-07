@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Item from './item';
 import Model from '../../model/model';
 
@@ -8,11 +8,11 @@ interface ToDoListProps {
 
 const ToDoList: React.FC<ToDoListProps> = (props) => {
     const { model } = props;
-
-    if(model.list.length === 0) return <div>No tasks</div>;
+    const [list, setList] = useState<Items>(model.list);
 
     const handleListChaned = ()=> {
-
+        console.log("changing list of toDoList");
+        setList(model.list);
     }
 
     useEffect(()=> {
@@ -20,9 +20,11 @@ const ToDoList: React.FC<ToDoListProps> = (props) => {
         return ()=> { model.detachFromList(subscription); }
     });
 
+    if(list.list.length === 0) return <div>No tasks</div>;
+
     return (
         <div>
-            {model.list.map( (item:ListItem) => <Item key={item.id} item={item} model={model}/>)}
+            {list.list.map( (item:ListItem) => <Item key={item.id} item={item} model={model}/>)}
         </div>
     );
 }
