@@ -26,7 +26,6 @@ const App = () => {
 
   return (
     <div>
-      <ToDoList model={model}/>
       <AddItemBlock model={model}/>
       <div>
         <button onClick={handleSortTextUp}>Sort Text Up</button>
@@ -36,6 +35,7 @@ const App = () => {
         <button onClick={handleSortDonetUp}>Sort Done Up</button>
         <button onClick={handleSortDoneDown}>Sort Done Down</button>
       </div>
+      <ToDoList model={model}/>
     </div>
   );
 }
