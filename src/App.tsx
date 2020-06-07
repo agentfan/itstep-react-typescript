@@ -8,10 +8,34 @@ const theModel = new Model([]);
 const App = () => {
   const [model, setModel] = React.useState<Model>(theModel);
 
+  const handleSortTextUp = ()=> {
+    model.sortTextUp();
+  }
+
+  const handleSortTextDown = ()=> {
+    model.sortTextDown();
+  }
+
+  const handleSortDonetUp = ()=> {
+    model.sortDoneUp();
+  }
+
+  const handleSortDoneDown = ()=> {
+    model.sortDoneDown();
+  }
+
   return (
     <div>
       <ToDoList model={model}/>
       <AddItemBlock model={model}/>
+      <div>
+        <button onClick={handleSortTextUp}>Sort Text Up</button>
+        <button onClick={handleSortTextDown}>Sort Text Down</button>
+      </div>
+      <div>
+        <button onClick={handleSortDonetUp}>Sort Done Up</button>
+        <button onClick={handleSortDoneDown}>Sort Done Down</button>
+      </div>
     </div>
   );
 }

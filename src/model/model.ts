@@ -116,6 +116,50 @@ class Model {
             this.onTaskChanged(taskId);
         }
     }
+
+    public sortTextUp() {
+        const newList:Items = {list: this.listOfTasks.list };
+        newList.list.sort((a,b) => {
+            if(a.text > b.text) return -1;
+            if(a.text < b.text) return 1;
+            return 0;
+        });
+        this.listOfTasks = newList;
+        this.onListChanged();        
+    }
+
+    public sortTextDown() {
+        const newList:Items = {list: this.listOfTasks.list };
+        newList.list.sort((a,b) => {
+            if(a.text > b.text) return 1;
+            if(a.text < b.text) return -1;
+            return 0;
+        });
+        this.listOfTasks = newList;
+        this.onListChanged();        
+    }
+
+    public sortDoneUp() {
+        const newList:Items = {list: this.listOfTasks.list };
+        newList.list.sort((a,b) => {
+            if(a.done > b.done) return -1;
+            if(a.done < b.done) return 1;
+            return 0;
+        });
+        this.listOfTasks = newList;
+        this.onListChanged();        
+    }
+    
+    public sortDoneDown() {
+        const newList:Items = {list: this.listOfTasks.list };
+        newList.list.sort((a,b) => {
+            if(a.done > b.done) return 1;
+            if(a.done < b.done) return -1;
+            return 0;
+        });
+        this.listOfTasks = newList;
+        this.onListChanged();        
+    }     
 }
 
 export default Model;

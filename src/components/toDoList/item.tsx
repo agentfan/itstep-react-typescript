@@ -20,7 +20,7 @@ const Item: React.FC<ItemProps> = (props) => {
     useEffect(()=> {
         const subscription:number = model.subscribeToTask(item.id, handleTaskChanged);
         return ()=> { model.detachFromTask(subscription); }
-    },[props.item]);
+    },[props.model]);
 
     const handleDelete = ()=> {
         model.removeTask(item.id);
