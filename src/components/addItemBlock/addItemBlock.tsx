@@ -10,7 +10,7 @@ const useStyles = makeStyles({
         display: 'grid',
         gridTemplateColumns: '1fr 7rem',
         '& input': {
-            textSize: '1rem',
+            fontSize: '1rem',
             padding: '0.25rem 0.5rem',
             width: 'calc(100% - 1.7rem)'
         },
