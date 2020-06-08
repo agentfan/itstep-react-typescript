@@ -36,21 +36,21 @@ const App = () => {
 
   const [model, setModel] = React.useState<Model>(theModel);
 
-  let textSort = true;  // true - sort "Up"; false - sort "Down"
+  let textSort:boolean = true;  // true - sort "Up"; false - sort "Down"
   const handleSortText = () => {
     if (textSort) model.sortTextUp();
     else model.sortTextDown();
     textSort = !textSort;
   }
 
-  let doneSort = true;  // true - sort "Up"; false - sort "Down"
+  let doneSort:boolean = true;  // true - sort "Up"; false - sort "Down"
   const handleSortDone = () => {
     if (doneSort) model.sortDoneUp();
     else model.sortDoneDown();
     doneSort = !doneSort;
   }
 
-  let idSort = true;  // true - sort "Up"; false - sort "Down"
+  let idSort:boolean = true;  // true - sort "Up"; false - sort "Down"
   const handleSortId = () => {
     if (idSort) model.sortIdUp();
     else model.sortIdDown();

@@ -41,36 +41,22 @@ class Model {
 
     public subscribeToTask(taskId: number, callback: (id:number, item: ListItem) => void):number {
         this.ArrayOfSubscribedToTask.push({id: ++this.idOfSubscribedToTask, taskId, callback});
-        console.log(`Subscribe to task ${taskId} ${callback} => ${this.idOfSubscribedToTask}:`);
-        console.log(this.ArrayOfSubscribedToTask);
         return this.idOfSubscribedToTask;
     }
 
     public detachFromTask(id:number):void {
         let i = this.ArrayOfSubscribedToTask.findIndex(a => a.id === id);
-        if(i !== -1) {
-            this.ArrayOfSubscribedToTask.splice(i,1);
-            console.log(`Detach from task ${id}:`);
-        }
-        else console.log(`Detach from task ${id} failed!`);
-        console.log(this.ArrayOfSubscribedToTask);
+        if(i !== -1) this.ArrayOfSubscribedToTask.splice(i,1);
     }
 
     public subscribeToList(callback: () => void):number {
         this.ArrayOfSubscribedToList.push({id: ++this.idOfSubscribedToList, callback});
-        console.log(`Subscribe to list ${callback} => ${this.idOfSubscribedToList}:`);
-        console.log(this.ArrayOfSubscribedToList);
         return this.idOfSubscribedToList;        
     }
 
     public detachFromList(id:number):void {
         let i = this.ArrayOfSubscribedToList.findIndex(a => a.id === id);
-        if(i !== -1) {
-            this.ArrayOfSubscribedToList.splice(i,1);
-            console.log(`Detach from list ${id}:`);
-        }
-        else console.log(`Detach from list ${id} failed!`);
-        console.log(this.ArrayOfSubscribedToList);
+        if(i !== -1) this.ArrayOfSubscribedToList.splice(i,1);
     }
 
     public addTask(text: string | undefined) {
@@ -98,20 +84,16 @@ class Model {
     }
 
     public changeTextOfTask(taskId: number, text:string) {
-        console.log("Changing text of task:",taskId,text);
         let task = this.listOfTasks.list.find( t => t.id === taskId);
         if(task) {
-            console.log("Text changed");
             task.text = text;
             this.onTaskChanged(taskId);
         }
     }
 
     public changeDoneOfTask(taskId: number, done:boolean) {
-        console.log("Changing done of task:",taskId,done);
         let task = this.listOfTasks.list.find( t => t.id === taskId);
         if(task) {
-            console.log("Done changed");
             task.done = done;
             this.onTaskChanged(taskId);
         }

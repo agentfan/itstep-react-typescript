@@ -26,10 +26,7 @@ const ToDoList: React.FC<ToDoListProps> = (props) => {
     const { model } = props;
     const [list, setList] = useState<Items>(model.list);
 
-    const handleListChaned = ()=> {
-        console.log("changing list of toDoList");
-        setList(model.list);
-    }
+    const handleListChaned = ()=> { setList(model.list);}
 
     useEffect(()=> {
         const subscription:number = model.subscribeToList(handleListChaned);

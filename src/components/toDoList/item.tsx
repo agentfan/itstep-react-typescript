@@ -51,7 +51,6 @@ const Item: React.FC<ItemProps> = (props) => {
     const [done, setDone] = React.useState<boolean>(item.done);
 
     const handleTaskChanged = (id: number, newItem: ListItem) => {
-        console.log("task changed:", newItem);
         setText(newItem.text);
         setDone(newItem.done);
     }
@@ -70,12 +69,10 @@ const Item: React.FC<ItemProps> = (props) => {
     }
 
     const handleBlur = () => {
-        console.log("blur");
         model.changeTextOfTask(item.id, text);
     }
 
     const handleDone = (e: ChangeEvent<HTMLInputElement>) => {
-        console.log("done");
         model.changeDoneOfTask(item.id, e.currentTarget.checked);
     }
 
