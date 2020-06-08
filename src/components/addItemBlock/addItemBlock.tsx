@@ -38,6 +38,7 @@ const AddItemBlock: React.FC<AddItemBlockProps> = (props) => {
 
     const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
         model.addTask(inputValue);
+        setInputValue("");
     }
 
     return (
