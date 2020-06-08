@@ -159,7 +159,22 @@ class Model {
         });
         this.listOfTasks = newList;
         this.onListChanged();        
-    }     
+    }   
+    
+    public sortIdUp() {
+        const newList:Items = {list: this.listOfTasks.list };
+        newList.list.sort((a,b) => a.id - b.id);
+        this.listOfTasks = newList;
+        this.onListChanged();        
+    }    
+
+    public sortIdDown() {
+        const newList:Items = {list: this.listOfTasks.list };
+        newList.list.sort((a,b) => b.id - a.id);
+        this.listOfTasks = newList;
+        this.onListChanged();        
+    }    
+
 }
 
 export default Model;
